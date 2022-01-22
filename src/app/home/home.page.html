@@ -1,28 +1,25 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> SocialSharing Crash </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">SocialSharing Crash</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
-    <ion-button (click)="shareWithOptionsFile()">shareWithOptions file</ion-button>
-    <ion-button (click)="shareWithOptionsFileArray()">shareWithOptions fileArray</ion-button>
-    <ion-button (click)="shareViaEmailFile()">shareViaEmail file</ion-button>
-    <ion-button (click)="shareViaEmailFileArray()">shareViaEmail fileArray</ion-button>
-    <ion-button (click)="shareFile()">share file</ion-button>
-    <ion-button (click)="shareFileArray()">share fileArray</ion-button>
-    <ion-button (click)="saveToPhotoAlbumFile()">saveToPhotoAlbum file</ion-button>
-    <ion-button (click)="saveToPhotoAlbumFileArray()">saveToPhotoAlbum fileArray</ion-button>
-    <ion-button (click)="shareViaWhatsAppToPhoneFile()">shareViaWhatsAppToPhone file</ion-button>
-    <ion-button (click)="shareViaWhatsAppToPhoneFileArray()">shareViaWhatsAppToPhone fileArray</ion-button>
+    <ion-button
+      color="danger"
+      size="large"
+      (click)="callShareWithOptionsCrash()"
+      >Crash</ion-button
+    >
+    <ion-button size="large" (click)="callShareWithOptionsSuccess()"
+      >Success</ion-button
+    >
   </div>
 </ion-content>
