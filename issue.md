@@ -1,7 +1,7 @@
 Title:
 
 
-The `files` parameter type of `shareWithOptions` method in `@awesome-cordova-plugins/social-sharing` should be only `string[]`
+The `files` parameter type of `shareWithOptions` method in social-sharing should be only `string[]`
 
 
 **I'm submitting a ...**  (check one with "x")
@@ -22,6 +22,20 @@ The exception that occur on iOS:
 
 The above exception is occurring in [`filenames.count` of the social-sharing plugin](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin/blob/master/src/ios/SocialSharing.m#L98)
 
+Example code that raises an exception:
+
+```TypeScript
+// exception occurs
+this.socialSharing.shareWithOptions({ files: 'filePath' });
+```
+
+Code example where exception does not occur:
+
+```TypeScript
+// exception does not occur
+this.socialSharing.shareWithOptions({ files: ['filePath'] });
+```
+
 
 **Expected behavior:**
 <!-- Describe what the behavior would be without the bug. -->
@@ -29,18 +43,23 @@ The `files` parameter type of `shareWithOptions` method should be only `string[]
 
 iOS crash does not occur if the `files` parameter is of type `string []`.
 
+
+Also, as far as I read the [README.md of the social-sharing plugin](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin#using-the-share-sheet), it seems that the `files` parameter type only assumes `string[]`.
+
 **Steps to reproduce:**
 <!-- If you are able to illustrate the bug or feature request with an example, please provide steps to reproduce. -->
 
-[a link to a minimal reproduction of the bug](https://github.com/takuya-nakayasu/ionic-social-sharing-crash-sample)
+[A link to a minimal reproduction of the bug](https://github.com/takuya-nakayasu/ionic-social-sharing-crash-sample)
 
 1. Build the Ionic project linked above on iOS
 2. Run on iOS simulators or devices
 3. Press the button whose label is `Crash`
 
+![reproduce gif](https://user-images.githubusercontent.com/10209574/150665717-fc410854-5c80-4b9b-99af-a48ce200e31f.gif)
+
 **Related code:**
 
-```
+```TypeScript
   /**
    * Shares using the share sheet with additional options and returns a result object or an error message (requires plugin version 5.1.0+)
    *
@@ -68,6 +87,24 @@ iOS crash does not occur if the `files` parameter is of type `string []`.
 
 **Other information:**
 <!-- List any other information that is relevant to your issue. Stack traces, related issues, suggestions on how to fix, Stack Overflow links, forum links, etc. -->
+
+Suggestions on how to fix:
+
+```
+diff --git a/src/@awesome-cordova-plugins/plugins/social-sharing/index.ts b/src/@awesome-cordova-plugins/plugins/social-sharing/index.ts
+index b475458b..db026206 100644
+--- a/src/@awesome-cordova-plugins/plugins/social-sharing/index.ts
++++ b/src/@awesome-cordova-plugins/plugins/social-sharing/index.ts
+@@ -74,7 +74,7 @@ export class SocialSharing extends AwesomeCordovaNativePlugin {
+   shareWithOptions(options: {
+     message?: string;
+     subject?: string;
+-    files?: string | string[];
++    files?: string[];
+     url?: string;
+```
+
+I will make a PR from now on.
 
 **Ionic info:** (run `ionic info` from a terminal/cmd prompt and paste output below):
 
